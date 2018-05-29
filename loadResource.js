@@ -1,6 +1,4 @@
-/*!
- * loadResource.js
- */
+/*! loadResource.js */
 (function(root, factory){
     root.load_res = factory(root);
 })(typeof global !== "undefined" ? global : this.window || this.global,  function (root) {
@@ -70,17 +68,23 @@
         loadimg : function (callback) {
             var t = this;
             var ifFinish = true;
-            var imgs = document.getElementsByTagName("img .lazyload");
+            var imgs = document.getElementsByTagName("img");
             for(k in imgs){
                 v = imgs[k];
-                if(!v.complete){
+                if('object' == typeof v && !v.complete){
+                    console.log(v);
                     ifFinish = false;
                 }
             }
             if(!ifFinish){
                 setTimeout(function() {
                     t.loadimg(callback)
-                }, 100);
+                }, 1000);
+            }else{
+                if('undefined' != typeof callback){
+                    callback();
+                }
+                console.log('loaded');
             }
         }
     }
