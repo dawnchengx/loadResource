@@ -51,13 +51,19 @@
             }
         },
 
-        loadcss : function (href, callback){
+        loadcss : function (href, callback, attr_obj){
             var t = this;
             var node = document.createElement("link");
             node.setAttribute("rel","stylesheet");
             node.setAttribute("type","text/css");
             node.setAttribute("href",href);
-            document.body.appendChild(node);
+            if('undefined' != typeof attr_obj){
+                for(k in attr_obj){
+                    v = attr_obj[k];
+                    node.setAttribute(k, v);
+                }
+            }
+            document.head.appendChild(node);
             t.styleOnload(node,function(){
                 if('undefined' != typeof callback){
                     callback();
